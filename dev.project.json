@@ -1,0 +1,13 @@
+{
+	"name": "refx-dev",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"Packages": {
+				"$path": "Packages",
+				"refx": { "$path": "src" }
+			}
+		}
+	}
+}
