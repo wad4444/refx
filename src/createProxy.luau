@@ -4,8 +4,8 @@ local logger = require(script.Parent.utilities.logger)
 
 local baseEffect = require(script.Parent.baseEffect)
 
-return function(ctorName: string, ...)
-	local params = { ... }
+return function<T...>(ctorName: string, ...: T...)
+	local params = table.pack(...)
 	local id = uniqueId
 	uniqueId += 1
 
@@ -40,5 +40,5 @@ return function(ctorName: string, ...)
 		end
 	end
 
-	return proxy :: baseEffect.Proxy
+	return proxy :: baseEffect.Proxy<T...>
 end

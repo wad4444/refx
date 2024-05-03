@@ -7,9 +7,10 @@ BaseEffect.__index = BaseEffect
 
 local logger = require(script.Parent.utilities.logger)
 
-export type Proxy = {
-	Start: (proxy: Proxy, players: { Player }) -> (),
-	GetPlayers: (proxy: Proxy) -> { Player },
+export type Proxy<T...> = {
+	__index: EffectConstructor<T...>,
+	Start: (proxy: Proxy<T...>, players: { Player }) -> (),
+	GetPlayers: (proxy: Proxy<T...>) -> { Player },
 }
 
 export type BaseEffectConstructor<T...> = {
@@ -24,7 +25,7 @@ export type BaseEffectObject = {
 
 export type BaseEffect<T...> = typeof(setmetatable({} :: BaseEffectObject, {} :: BaseEffectConstructor<T...>))
 
-export type Effect<T...> = typeof(setmetatable({} :: BaseEffectObject, {} :: EffectConstructor<T...>)) & Proxy
+export type Effect<T...> = typeof(setmetatable({} :: BaseEffectObject, {} :: EffectConstructor<T...>)) | Proxy<T...>
 export type EffectConstructor<T...> = BaseEffectConstructor<T...> & { new: (T...) -> Effect<T...> }
 
 function BaseEffect:constructor(...): BaseEffect<...unknown>
