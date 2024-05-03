@@ -7,7 +7,7 @@ return function<T...>(ctor: baseEffect.BaseEffectConstructor<T...>)
 	local updated = ctor :: baseEffect.EffectConstructor<T...>
 	updated.new = function(...: T...)
 		if runService:IsServer() then
-			return createProxy(tostring(ctor), ...) :: baseEffect.Effect<T...>
+			return createProxy(tostring(ctor), ...)
 		end
 
 		local self = setmetatable({}, ctor) :: baseEffect.BaseEffect<T...>
