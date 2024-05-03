@@ -5,6 +5,8 @@ local BaseEffect = setmetatable({}, {
 })
 BaseEffect.__index = BaseEffect
 
+local logger = require(script.Parent.utilities.logger)
+
 export type Proxy = {
 	Start: (proxy: Proxy, players: { Player }) -> (),
 	GetPlayers: (proxy: Proxy) -> { Player },
@@ -31,5 +33,14 @@ function BaseEffect:constructor(...): BaseEffect<...unknown>
 end
 
 function BaseEffect:OnStart() end
+
+local restrictedNames = { "Start", "GetPlayers" }
+for _, v in restrictedNames do
+	BaseEffect[v] = function()
+		logger.error(`Cannot use :{v}() on client.`)
+	end
+end
+
+table.freeze(BaseEffect)
 
 return BaseEffect
