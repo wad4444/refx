@@ -28,9 +28,8 @@ export type BaseEffect<T...> = typeof(setmetatable({} :: BaseEffectObject, {} ::
 export type Effect<T...> = typeof(setmetatable({} :: BaseEffectObject, {} :: EffectConstructor<T...>)) | Proxy<T...>
 export type EffectConstructor<T...> = BaseEffectConstructor<T...> & { new: (T...) -> Effect<T...> }
 
-function BaseEffect:constructor(...): BaseEffect<...unknown>
+function BaseEffect:constructor(...)
 	self.Configuration = { ... }
-	return self :: never
 end
 
 function BaseEffect:OnStart() end
