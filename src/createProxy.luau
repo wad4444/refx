@@ -5,11 +5,9 @@ local logger = require(utils.logger)
 local createIdGenerator = require(utils.idGenerator)
 
 local map = require(script.Parent.effectsMap)
-
-local baseEffect = require(script.Parent.baseEffect)
 local nextId = createIdGenerator()
 
-return function<T...>(ctorName: string, ...: T...)
+return function(ctorName, ...)
 	local params = table.pack(...)
 	local id = nextId()
 
@@ -43,7 +41,7 @@ return function<T...>(ctorName: string, ...: T...)
 		return id
 	end
 
-	local cachedSenders: { [string]: <T...>(T...) -> () } = {}
+	local cachedSenders = {}
 
 	function mt.__index(_self, index)
 		if reservedFunctions[index] then
@@ -68,5 +66,5 @@ return function<T...>(ctorName: string, ...: T...)
 		logger.error(`Cannot override value of {index} from effect proxy!`)
 	end
 
-	return proxy :: baseEffect.Proxy<T...>
+	return proxy
 end

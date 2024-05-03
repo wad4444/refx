@@ -4,7 +4,6 @@ local utils = script.Parent.utilities
 local logger = require(utils.logger)
 local remotes = require(script.Parent.remotes)
 local map = require(script.Parent.effectsMap)
-local entries = require(script.entries)
 
 local runService = game:GetService("RunService")
 
@@ -39,7 +38,7 @@ function client.Start()
 		)
 		assert(constructor, "")
 
-		entries.processEntry(constructor.locally(params), id)
+		constructor._locallyWithId(params, id)
 	end)
 end
 

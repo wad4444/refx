@@ -1,19 +1,14 @@
 local logger = require(script.Parent.utilities.logger)
 
-type Constructor<T...> = typeof((function()
-	local baseEffect = require(script.Parent.baseEffect)
-	return ({} :: any) :: baseEffect.EffectConstructor<T...>
-end)())
-
-local map: { [string]: Constructor<...unknown> | nil } = {}
+local map = {}
 
 local effectsMap = {}
 
 function effectsMap.get(name: string)
-	return map[name] :: Constructor<...unknown> | nil
+	return map[name]
 end
 
-function effectsMap.add(effect: Constructor<...unknown>)
+function effectsMap.add(effect)
 	local name = tostring(effect)
 	logger.assert(map[name] == nil, `Double registration detected for effect {name}`)
 end
