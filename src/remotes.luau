@@ -3,10 +3,10 @@ local remo = require(modules.remo)
 local t = require(modules.t)
 
 type Remotes = {
-	__refx_create: remo.ServerToClient<string, number, { any }>,
+	__refx_create: remo.ServerToClient<string, number, { unknown }>,
 	__refx_destroy: remo.ServerToClient<number>,
-	__refx_communicator_rel: remo.ServerToClient<number, string, { any }>,
-	__refx_communicator_urel: remo.ServerToClient<number, string, { any }>,
+	__refx_communicator_rel: remo.ServerToClient<number, string, { unknown }>,
+	__refx_communicator_urel: remo.ServerToClient<number, string, { unknown }>,
 }
 
 return remo.createRemotes({

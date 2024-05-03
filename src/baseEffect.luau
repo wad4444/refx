@@ -5,13 +5,13 @@ local BaseEffect = setmetatable({}, {
 })
 BaseEffect.__index = BaseEffect
 
-local logger = require(script.Parent.utilities.logger)
-
-export type Proxy<T...> = {
-	__index: EffectConstructor<T...>,
-	Start: (proxy: Proxy<T...>, players: { Player }) -> (),
-	GetPlayers: (proxy: Proxy<T...>) -> { Player },
-}
+export type Proxy<T...> = typeof(setmetatable(
+	{} :: {
+		Start: (proxy: Proxy<T...>, players: { Player }) -> (),
+		GetPlayers: (proxy: Proxy<T...>) -> { Player },
+	},
+	{} :: { __index: EffectConstructor<T...> }
+))
 
 export type BaseEffectConstructor<T...> = {
 	__index: BaseEffectConstructor<T...>,
@@ -21,29 +21,25 @@ export type BaseEffectConstructor<T...> = {
 
 export type BaseEffectObject = {
 	Configuration: { unknown },
+	MaxLifetime: number?,
+	DisableLeakWarning: boolean,
 }
 
 export type BaseEffect<T...> = typeof(setmetatable({} :: BaseEffectObject, {} :: BaseEffectConstructor<T...>))
 
-export type Effect<T...> = typeof(setmetatable({} :: BaseEffectObject, {} :: EffectConstructor<T...>)) | Proxy<T...>
+export type Effect<T...> = typeof(setmetatable({} :: BaseEffectObject, {} :: EffectConstructor<T...>))
 export type EffectConstructor<T...> = typeof(setmetatable(
-	{} :: { __index: EffectConstructor<T...>, new: (T...) -> Effect<T...> },
+	{} :: { __index: EffectConstructor<T...>, new: (T...) -> Proxy<T...>, locally: (T...) -> Effect<T...> },
 	{} :: { __index: BaseEffectConstructor<T...> }
 ))
 
-function BaseEffect:constructor(...)
+function BaseEffect.constructor(self: BaseEffect<...any>, ...)
 	self.Configuration = { ... }
+	self.DisableLeakWarning = false
 	return self
 end
 
 function BaseEffect:OnStart() end
-
-local restrictedNames = { "Start", "GetPlayers" }
-for _, v in restrictedNames do
-	BaseEffect[v] = function()
-		logger.error(`Cannot use :{v}() on client.`)
-	end
-end
 
 table.freeze(BaseEffect)
 

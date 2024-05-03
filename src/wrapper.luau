@@ -2,14 +2,18 @@ local baseEffect = require(script.Parent.baseEffect)
 local runService = game:GetService("RunService")
 
 local createProxy = require(script.Parent.createProxy)
+local logger = require(script.Parent.utilities.logger)
 local wrapper = {}
 
 function wrapper.VisualEffectDecorator<T...>(ctor: baseEffect.EffectConstructor<T...>): baseEffect.EffectConstructor<T...>
 	local updated = ctor
 	updated.new = function(...: T...)
-		if runService:IsServer() then
-			return createProxy(tostring(ctor), ...)
-		end
+		logger.assert(runService:IsServer(), `Cannot get effect proxy on server.`)
+		return createProxy(tostring(ctor), ...)
+	end
+
+	updated.locally = function(...: T...)
+		logger.assert(runService:IsClient(), `Cannot cast effect locally on server.`)
 
 		local self = setmetatable({} :: baseEffect.BaseEffectObject, ctor)
 		self.constructor(self :: any, ...)
