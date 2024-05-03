@@ -16,7 +16,7 @@ export type Proxy<T...> = {
 export type BaseEffectConstructor<T...> = {
 	__index: BaseEffectConstructor<T...>,
 	OnStart: (BaseEffect<T...>) -> (),
-	constructor: (BaseEffect<T...>, T...) -> (),
+	constructor: (BaseEffect<T...>, T...) -> BaseEffect<T...>,
 }
 
 export type BaseEffectObject = {
@@ -26,10 +26,14 @@ export type BaseEffectObject = {
 export type BaseEffect<T...> = typeof(setmetatable({} :: BaseEffectObject, {} :: BaseEffectConstructor<T...>))
 
 export type Effect<T...> = typeof(setmetatable({} :: BaseEffectObject, {} :: EffectConstructor<T...>)) | Proxy<T...>
-export type EffectConstructor<T...> = BaseEffectConstructor<T...> & { new: (T...) -> Effect<T...> }
+export type EffectConstructor<T...> = typeof(setmetatable(
+	{} :: { __index: EffectConstructor<T...>, new: (T...) -> Effect<T...> },
+	{} :: { __index: BaseEffectConstructor<T...> }
+))
 
 function BaseEffect:constructor(...)
 	self.Configuration = { ... }
+	return self
 end
 
 function BaseEffect:OnStart() end
@@ -43,4 +47,4 @@ end
 
 table.freeze(BaseEffect)
 
-return BaseEffect
+return (BaseEffect :: any) :: BaseEffectConstructor<...any>

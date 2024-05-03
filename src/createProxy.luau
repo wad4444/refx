@@ -16,7 +16,7 @@ return function<T...>(ctorName: string, ...: T...)
 	local proxy = newproxy(true)
 	local mt = getmetatable(proxy)
 
-	local constructor = map.get(ctorName) :: baseEffect.EffectConstructor<T...>
+	local constructor = map.get(ctorName)
 	logger.assert(constructor == nil, `Cannot constructor Proxy for invalid effect.`)
 
 	local initialized = false
@@ -52,7 +52,7 @@ return function<T...>(ctorName: string, ...: T...)
 
 		logger.assert(not initialized, `Cannot :{index}() before effect has started.`)
 		logger.assert(not destroyed, `Cannot :{index}() after effect has been destroyed.`)
-		logger.assert(rawget(constructor, index) ~= nil, `Effect is missing method {index} to call!`)
+		logger.assert(rawget(constructor :: any, index) ~= nil, `Effect is missing method {index} to call!`)
 
 		if not cachedSenders[index] then
 			cachedSenders[index] = function(...)

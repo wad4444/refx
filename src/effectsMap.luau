@@ -5,15 +5,15 @@ type Constructor<T...> = typeof((function()
 	return ({} :: any) :: baseEffect.EffectConstructor<T...>
 end)())
 
-local map: { [string]: Constructor<...any> | nil } = {}
+local map: { [string]: Constructor<...unknown> | nil } = {}
 
 local effectsMap = {}
 
 function effectsMap.get(name: string)
-	return map[name]
+	return map[name] :: Constructor<...unknown> | nil
 end
 
-function effectsMap.add(effect: Constructor<...any>)
+function effectsMap.add(effect: Constructor<...unknown>)
 	local name = tostring(effect)
 	logger.assert(map[name] == nil, `Double registration detected for effect {name}`)
 end
