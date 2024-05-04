@@ -2,19 +2,19 @@ local refx = require(script.Parent.Parent)
 
 return function()
 	local testEffect = refx.CreateEffect("_test1")
-    function testEffect:testfn() end
+	function testEffect:testfn() end
 
 	it("should accept arguments", function()
 		expect(testEffect.new(1, 2, 3)).to.be.ok()
 	end)
 
-    describe(":Destroy()", function()
-        it("should destroy a proxy", function()
-            local proxy = testEffect.new()
-            expect(function()
+	describe(":Destroy()", function()
+		it("should destroy a proxy", function()
+			local proxy = testEffect.new()
+			expect(function()
 				proxy:Destroy()
-            end).to.be.ok()
-        end)
+			end).to.be.ok()
+		end)
 
 		it("cannot destroy twice", function()
 			local proxy = testEffect.new()
@@ -23,7 +23,7 @@ return function()
 				proxy:Destroy()
 			end).to.throw("twice")
 		end)
-    end)
+	end)
 
 	it("it should call effect methods", function()
 		local proxy = testEffect.new():Start({})
