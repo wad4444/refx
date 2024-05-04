@@ -7,6 +7,8 @@ local createIdGenerator = require(utils.idGenerator)
 local map = require(script.Parent.effectsMap)
 local nextId = createIdGenerator()
 
+local t = require(script.Parent.modules.t)
+
 return function(ctorName, ...)
 	local params = {...}
 	local id = nextId()
@@ -21,8 +23,15 @@ return function(ctorName, ...)
 	local destroyed = false
 	local players: { Player } = {}
 
+	local function omitSelf(...)
+		local args = {...}
+		return table.unpack(args, args[1] == proxy and 2 or 1)
+	end
+
 	local reservedFunctions = {
-		Start = function(plrs)
+		Start = function(...)
+			local plrs = omitSelf(...)
+			logger.assert(t.array(t.instance("Player"))(plrs), "Provide a valid array of players to :Start().")
 			logger.assert(not initialized, "Cannot :Start() effect twice.")
 
 			players = plrs
@@ -32,7 +41,7 @@ return function(ctorName, ...)
 			return proxy
 		end,
 		GetPlayers = function()
-			logger.assert(initialized, "Cannot :GetPlayers()")
+			logger.assert(initialized, "Cannot :GetPlayers() before effect has initialized.")
 			return players
 		end,
 		Destroy = function()
@@ -42,7 +51,7 @@ return function(ctorName, ...)
 	}
 
 	function mt.__tostring()
-		return id
+		return ctorName
 	end
 
 	local cachedSenders = {}
@@ -58,10 +67,7 @@ return function(ctorName, ...)
 
 		if not cachedSenders[index] then
 			cachedSenders[index] = function(...)
-				local callArgs = { ... }
-				if callArgs[1] == proxy then
-					table.remove(callArgs, 1)
-				end
+				local callArgs = { omitSelf(...) }
 				callArgs[0] = "__REFX_HOLD" -- If we assign index 0 then Roblox will treat this table as a map and arguments that come after 0 don't disappear.
 				remotes.__refx_communicator_rel:firePlayers(players, id, index, callArgs)
 			end
