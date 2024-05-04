@@ -3,6 +3,7 @@ local utils = script.Parent.utilities
 local remotes = require(script.Parent.remotes)
 local logger = require(utils.logger)
 local createIdGenerator = require(utils.idGenerator)
+local configuration = require(script.Parent.configuration)
 
 local map = require(script.Parent.effectsMap)
 local nextId = createIdGenerator()
@@ -61,14 +62,21 @@ return function(ctorName, ...)
 			return reservedFunctions[index]
 		end
 
+		local foundMethod = rawget(constructor, index)
 		logger.assert(initialized, `Cannot :{index}() before effect has started.`)
 		logger.assert(not destroyed, `Cannot :{index}() after effect has been destroyed.`)
-		logger.assert(rawget(constructor :: any, index) ~= nil, `Effect is missing method "{index}" to call!`)
+		logger.assert(foundMethod ~= nil, `Effect is missing method "{index}" to call!`)
 
 		if not cachedSenders[index] then
 			cachedSenders[index] = function(...)
 				local callArgs = { omitSelf(...) }
 				callArgs[0] = "__REFX_HOLD" -- If we assign index 0 then Roblox will treat this table as a map and arguments that come after 0 don't disappear.
+
+				local config = configuration.GetConfig(foundMethod)
+				if config.Unreliable == true then
+					remotes.__refx_communicator_urel:firePlayers(players, id, index, callArgs)
+					return
+				end
 				remotes.__refx_communicator_rel:firePlayers(players, id, index, callArgs)
 			end
 		end

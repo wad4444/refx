@@ -32,15 +32,22 @@ function BaseEffect:_start()
 	end
 	self._started = true
 
-	self:OnStart()
-	if self.DestroyOnEnd then
-		self:Destroy()
-	end
+	self._executionThread = task.spawn(function()
+		self:OnStart()
+		if self.DestroyOnEnd then
+			self:Destroy()
+		end
+	end)
 end
 
 function BaseEffect:Destroy()
 	if self.IsDestroyed then
 		return
+	end
+
+	if self._executionThread and coroutine.status(self._executionThread) ~= "dead" then
+		logger.warn(`:OnStart() was still executing, but effect is destroyed. Thread was cancelled.`)
+		task.cancel(self._executionThread)
 	end
 
 	self.IsDestroyed = true

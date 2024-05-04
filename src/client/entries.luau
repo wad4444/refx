@@ -42,14 +42,6 @@ function entries.checkCycle()
 		local isOverMaxLifetime = (tick() - entry.StartTimestamp) > effect.MaxLifetime
 
         local effectName = tostring(getmetatable(effect))
-
-		if effect.DestroyOnEnd then
-			if isOverMaxLifetime then
-				logger.warn(`Effect "{effectName}" takes too long to execute! Consider raising MaxLifetime.`)
-			end
-			continue
-		end
-
 		if isOverMaxLifetime and effect.DestroyOnLifecycleEnd then
 			effect:Destroy()
 			continue

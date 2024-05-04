@@ -14,6 +14,15 @@ function effectsMap.add(effect)
 	map[name] = effect
 end
 
+function effectsMap.getAll()
+	local list = {}
+	for _, v in map do
+		table.insert(list, v)
+	end
+
+	return list
+end
+
 table.freeze(effectsMap)
 
 return effectsMap
