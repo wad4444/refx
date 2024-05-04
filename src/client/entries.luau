@@ -29,6 +29,10 @@ function entries.processLocalEntry(effect)
 		Effect = effect,
 		StartTimestamp = tick(),
 	}
+
+	effect.Destroyed:Connect(function()
+		entriesMap[id] = nil
+	end)
 	effect:_start()
 end
 
