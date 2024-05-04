@@ -23,7 +23,7 @@ function BaseEffect.constructor(self, ...)
 	return self
 end
 
-function BaseEffect:Start()
+function BaseEffect:_start()
 	if self._started then
 		logger.error(`Cannot :Start() effect {self} twice!`)
 	end

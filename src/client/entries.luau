@@ -20,7 +20,7 @@ function entries.processReplicatedEntry(effect, id)
 	effect.Destroyed:Connect(function()
 		entriesMap[id] = nil
 	end)
-	effect:Start()
+	effect:_start()
 end
 
 function entries.processLocalEntry(effect)
@@ -29,7 +29,7 @@ function entries.processLocalEntry(effect)
 		Effect = effect,
 		StartTimestamp = tick(),
 	}
-	effect:Start()
+	effect:_start()
 end
 
 function entries.checkCycle()
