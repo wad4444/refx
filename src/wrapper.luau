@@ -1,7 +1,9 @@
 local baseEffect = require(script.Parent.baseEffect)
 local runService = game:GetService("RunService")
 
-local createProxy = require(script.Parent.createProxy)
+local createProxy = require(script.Parent.serverProxy)
+local createClientProxy = require(script.Parent.clientProxy)
+
 local logger = require(script.Parent.utilities.logger)
 local entries = require(script.Parent.client.entries)
 local effectsMap = require(script.Parent.effectsMap)
@@ -15,10 +17,7 @@ function wrapper.VisualEffectDecorator(ctor)
 
 	ctor.locally = function(...)
 		logger.assert(runService:IsClient(), `Cannot cast effect locally on server.`)
-		local self = setmetatable({}, ctor)
-		self:constructor(...)
-
-		entries.processLocalEntry(self)
+		return createClientProxy(ctor, ...)
 	end
 
 	ctor._withId = function(args, id)
@@ -27,6 +26,7 @@ function wrapper.VisualEffectDecorator(ctor)
 		self:constructor(args)
 
 		entries.processReplicatedEntry(self, id)
+		return self
 	end
 
 	effectsMap.add(ctor)

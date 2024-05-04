@@ -46,6 +46,7 @@ return function(ctorName, ...)
 			return players
 		end,
 		Destroy = function()
+			destroyed = true
 			remotes.__refx_destroy:firePlayers(players, id)
 			return proxy
 		end,
@@ -85,8 +86,10 @@ return function(ctorName, ...)
 	end
 
 	function mt.__newindex(_self, index)
-		logger.error(`Cannot override value of {index} from effect proxy!`)
+		logger.error(`Cannot override value of "{index}" from effect proxy!`)
 	end
+
+	mt.__metatable = {}
 
 	return proxy
 end
