@@ -81,6 +81,10 @@ function client.Start()
 	initialized = true
 end
 
+function client.IsInitialized()
+	return initialized
+end
+
 table.freeze(client)
 
 return client

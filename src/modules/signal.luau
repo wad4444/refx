@@ -1,12 +1,10 @@
 local package = script.Parent.Parent
 local packages = package.Parent
-local fallbackDirectory = package:FindFirstChild("dependencies")
 
 type SignalModule = typeof(require(packages.signal))
 
-local signalModule = packages:FindFirstChild("signal")
-	or (fallbackDirectory and fallbackDirectory:FindFirstChild("signal"))
-assert(signalModule, "Couldn't resolve dependency: Signal")
+local getModule = require(package.utilities.getModule)
+local signalModule = getModule("signal")
 
 -- i hate this
 export type Connection = typeof((function()
