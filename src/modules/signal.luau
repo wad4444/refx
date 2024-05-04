@@ -4,7 +4,7 @@ local fallbackDirectory = package:FindFirstChild("dependencies")
 
 type SignalModule = typeof(require(packages.signal))
 
-local signalModule = packages:FindFirstChild("t") or (fallbackDirectory and fallbackDirectory:FindFirstChild("Signal"))
+local signalModule = packages:FindFirstChild("signal") or (fallbackDirectory and fallbackDirectory:FindFirstChild("signal"))
 assert(signalModule, "Couldn't resolve dependency: Signal")
 
 -- i hate this

@@ -10,6 +10,8 @@ end
 function effectsMap.add(effect)
 	local name = tostring(effect)
 	logger.assert(map[name] == nil, `Double registration detected for effect {name}`)
+
+	map[name] = effect
 end
 
 table.freeze(effectsMap)

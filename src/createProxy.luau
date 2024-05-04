@@ -8,14 +8,14 @@ local map = require(script.Parent.effectsMap)
 local nextId = createIdGenerator()
 
 return function(ctorName, ...)
-	local params = table.pack(...)
+	local params = {...}
 	local id = nextId()
 
 	local proxy = newproxy(true)
 	local mt = getmetatable(proxy)
 
 	local constructor = map.get(ctorName)
-	logger.assert(constructor == nil, `Cannot constructor Proxy for invalid effect.`)
+	logger.assert(constructor ~= nil, `Cannot constructor Proxy for invalid effect.`)
 
 	local initialized = false
 	local destroyed = false
@@ -29,12 +29,16 @@ return function(ctorName, ...)
 			initialized = true
 
 			remotes.__refx_create:firePlayers(players, ctorName, id, params)
+			return proxy
 		end,
 		GetPlayers = function()
 			logger.assert(initialized, "Cannot :GetPlayers()")
 			return players
 		end,
-		Destroy = function() end,
+		Destroy = function()
+			remotes.__refx_destroy:firePlayers(players, id)
+			return proxy
+		end,
 	}
 
 	function mt.__tostring()
@@ -48,13 +52,17 @@ return function(ctorName, ...)
 			return reservedFunctions[index]
 		end
 
-		logger.assert(not initialized, `Cannot :{index}() before effect has started.`)
+		logger.assert(initialized, `Cannot :{index}() before effect has started.`)
 		logger.assert(not destroyed, `Cannot :{index}() after effect has been destroyed.`)
 		logger.assert(rawget(constructor :: any, index) ~= nil, `Effect is missing method {index} to call!`)
 
 		if not cachedSenders[index] then
 			cachedSenders[index] = function(...)
 				local callArgs = { ... }
+				if callArgs[1] == proxy then
+					table.remove(callArgs, 1)
+				end
+				callArgs[0] = "__REFX_HOLD" -- If we assign index 0 then Roblox will treat this table as a map and arguments that come after 0 don't disappear.
 				remotes.__refx_communicator_rel:firePlayers(players, id, index, callArgs)
 			end
 		end

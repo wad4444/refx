@@ -41,9 +41,11 @@ function entries.checkCycle()
 		local effect = entry.Effect
 		local isOverMaxLifetime = (tick() - entry.StartTimestamp) > effect.MaxLifetime
 
+        local effectName = tostring(getmetatable(effect))
+
 		if effect.DestroyOnEnd then
 			if isOverMaxLifetime then
-				logger.warn(`Effect {effect} takes too long to execute! Consider raising MaxLifetime.`)
+				logger.warn(`Effect "{effectName}" takes too long to execute! Consider raising MaxLifetime.`)
 			end
 			continue
 		end
@@ -54,13 +56,13 @@ function entries.checkCycle()
 		end
 
 		if isOverMaxLifetime and RunService:IsStudio() and not effect.DisableLeakWarning then
-			if (tick() - entry.LastWarningTimestamp) < 5 then
+			if entry.LastWarningTimestamp and ((tick() - entry.LastWarningTimestamp) < 10) then
 				continue
 			end
 
 			local overtime = tick() - entry.StartTimestamp - effect.MaxLifetime
 			logger.warn(
-				`A possible memory leak detected: \nEffect {effect} is living {overtime}s over max lifetime and isn't destroyed. \n`
+				`A possible memory leak detected: \nEffect "{effectName}" is living {overtime}s over max lifetime and isn't destroyed.`
 			)
 			entry.LastWarningTimestamp = tick()
 		end

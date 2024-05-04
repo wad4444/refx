@@ -20,8 +20,11 @@ function BaseEffect.constructor(self, ...)
 	self.DestroyOnEnd = true
 	self.Destroyed = signal.new()
 
+	self:OnConstruct()
 	return self
 end
+
+function BaseEffect:OnConstruct() end
 
 function BaseEffect:_start()
 	if self._started then

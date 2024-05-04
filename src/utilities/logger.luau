@@ -1,5 +1,5 @@
 local logger = {}
-local errorFormat = "// [refX]: %s //"
+local errorFormat = "[refX]: %s"
 
 function logger.assert(exp: boolean, error: string, traceback: boolean | nil)
 	local errorString = string.format(errorFormat, `{error} \n {traceback and debug.traceback()}`)

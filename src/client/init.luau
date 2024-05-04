@@ -50,6 +50,10 @@ function client.Start()
 	end)
 
 	local function processRequest(id, method, args)
+		if args[0] then
+			args[0] = nil
+		end
+
 		local effect = entries.getEffect(id)
 		if not effect then
 			logger.warn(
