@@ -9,7 +9,7 @@ end
 
 function effectsMap.add(effect)
 	local name = tostring(effect)
-	logger.assert(map[name] == nil, `Double registration detected for effect {name}`)
+	logger.assert(map[name] == nil, `Double registration detected for effect {name}. Consider choosing a different name.`)
 
 	map[name] = effect
 end

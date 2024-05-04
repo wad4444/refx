@@ -2,13 +2,13 @@ local exports = require(script.exports)
 table.freeze(exports)
 
 export type ServerProxy<K, V, T...> = {
-	Start: (ServerProxy<K, V, T...>?, { Player }) -> ServerProxy<K, V, T...>,
-	GetPlayers: (ServerProxy<K, V, T...>?) -> { Player },
-	Destroy: (ServerProxy<K, V, T...>?) -> nil,
+	Start: (ServerProxy<K, V, T...>, { Player }) -> ServerProxy<K, V, T...>,
+	GetPlayers: (ServerProxy<K, V, T...>) -> { Player },
+	Destroy: (ServerProxy<K, V, T...>) -> ServerProxy<K, V, T...>,
 } & K & Effect<K, V, T...>
 
 export type ClientProxy<K, V, T...> = {
-	Destroy: (ClientProxy<K, V, T...>?) -> nil,
+	Destroy: (ClientProxy<K, V, T...>) -> ClientProxy<K, V, T...>,
 } & K & Effect<K, V, T...>
 
 export type EffectFields = {
@@ -35,7 +35,7 @@ export type FunctionAttributes = {
 }
 
 type refX = {
-	CreateEffect: (string) -> EffectImpl<any, any, ...any>,
+	CreateEffect: (string) -> EffectImpl<unknown, unknown, ...unknown>,
 	Configure: ((...any) -> any, FunctionAttributes) -> (),
 	Start: () -> (),
 	Register: (Instance) -> (),

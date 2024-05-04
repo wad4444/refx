@@ -48,6 +48,8 @@ return function(ctorName, ...)
 			return players
 		end,
 		Destroy = function()
+			logger.assert(not destroyed, "Cannot :Destroy() an effect proxy twice.")
+
 			destroyed = true
 			remotes.__refx_destroy:firePlayers(players, id)
 			return proxy
