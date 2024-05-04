@@ -1,7 +1,90 @@
+local entriesMap = {}
 local entries = {}
 
-function entries.processReplicatedEntry(effect, id) end
+local utils = script.Parent.Parent.utilities
 
-function entries.processLocalEntry(effect) end
+local createGenerator = require(utils.idGenerator)
+local logger = require(utils.logger)
+
+local nextId = createGenerator(-1)
+local RunService = game:GetService("RunService")
+
+local checkerConnection
+
+function entries.processReplicatedEntry(effect, id)
+	entriesMap[id] = {
+		Effect = effect,
+		StartTimestamp = tick(),
+	}
+
+	effect.Destroyed:Connect(function()
+		entriesMap[id] = nil
+	end)
+	effect:Start()
+end
+
+function entries.processLocalEntry(effect)
+	local id = nextId()
+	entriesMap[id] = {
+		Effect = effect,
+		StartTimestamp = tick(),
+	}
+	effect:Start()
+end
+
+function entries.checkCycle()
+	if not next(entriesMap) then
+		return
+	end
+
+	for _, entry in entriesMap do
+		local effect = entry.Effect
+		if effect.DestroyOnEnd then
+			continue
+		end
+
+		local isOverMaxLifetime = (tick() - entry.StartTimestamp) > effect.MaxLifetime
+		if isOverMaxLifetime and effect.DestroyOnLifecycleEnd then
+			effect:Destroy()
+			continue
+		end
+
+		if isOverMaxLifetime and RunService:IsStudio() and not effect.DisableLeakWarning then
+			if (tick() - entry.LastWarningTimestamp) < 5 then
+				continue
+			end
+
+			local overtime = tick() - entry.StartTimestamp - effect.MaxLifetime
+			logger.warn(
+				`A possible memory leak detected: \nEffect {effect} is living {overtime}s over max lifetime and isn't destroyed. \n`
+			)
+			entry.LastWarningTimestamp = tick()
+		end
+	end
+end
+
+function entries.getEffect(id)
+	local entry = entriesMap[id]
+	if entry then
+		return entry.Effect
+	end
+
+    return nil
+end
+
+function entries.startChecker()
+	if checkerConnection then
+		return
+	end
+	checkerConnection = RunService.Heartbeat:Connect(entries.checkCycle)
+end
+
+function entries.stopChecker()
+	if not checkerConnection then
+		return
+	end
+	checkerConnection:Disconnect()
+	checkerConnection = nil
+end
 
 return entries

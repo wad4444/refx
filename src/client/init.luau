@@ -4,6 +4,7 @@ local utils = script.Parent.utilities
 local logger = require(utils.logger)
 local remotes = require(script.Parent.remotes)
 local map = require(script.Parent.effectsMap)
+local entries = require(script.entries)
 
 local runService = game:GetService("RunService")
 
@@ -40,6 +41,35 @@ function client.Start()
 
 		constructor._withId(params, id)
 	end)
+
+	remotes.__refx_destroy:connect(function(id)
+		local effect = entries.getEffect(id)
+		if effect then
+			effect:Destroy()
+		end
+	end)
+
+	local function processRequest(id, method, args)
+		local effect = entries.getEffect(id)
+		if not effect then
+			logger.warn(
+				`:{method}() isn't available. Effect you're trying to access is already destroyed! \n Tip: consider configuring DestroyOnEnd or MaxLifetime!`
+			)
+			return
+		end
+
+		if not effect[method] then
+			logger.error(`Method :{method}() is invalid.`)
+			return
+		end
+
+		effect[method](effect, table.unpack(args))
+	end
+
+	remotes.__refx_communicator_rel:connect(processRequest)
+	remotes.__refx_communicator_urel:connect(processRequest)
+
+	entries.startChecker()
 end
 
 table.freeze(client)
