@@ -1,15 +1,15 @@
 local exports = require(script.exports)
 table.freeze(exports)
 
-export type ServerProxy<K> = {
-	Start: (ServerProxy<K>?, { Player }) -> ServerProxy<K>,
-	GetPlayers: (ServerProxy<K>?) -> { Player },
-	Destroy: (ServerProxy<K>?) -> nil,
-} & K & any
+export type ServerProxy<K, V, T...> = {
+	Start: (ServerProxy<K, V, T...>?, { Player }) -> ServerProxy<K, V, T...>,
+	GetPlayers: (ServerProxy<K, V, T...>?) -> { Player },
+	Destroy: (ServerProxy<K, V, T...>?) -> nil,
+} & K & Effect<K, V, T...>
 
-export type ClientProxy<K> = {
-	Destroy: (ClientProxy<K>?) -> nil,
-} & K & any
+export type ClientProxy<K, V, T...> = {
+	Destroy: (ClientProxy<K, V, T...>?) -> nil,
+} & K & Effect<K, V, T...>
 
 export type EffectFields = {
 	IsDestroyed: boolean,
@@ -24,8 +24,8 @@ export type EffectImpl<K, V, T...> = {
 	__index: EffectImpl<K, V, T...>,
 	OnStart: (Effect<K, V, T...>, T...) -> (),
 	OnConstruct: (Effect<K, V, T...>) -> (),
-	new: (T...) -> ServerProxy<K>,
-	locally: (T...) -> ClientProxy<K>,
+	new: (T...) -> ServerProxy<K, V, T...>,
+	locally: (T...) -> ClientProxy<K, V, T...>,
 } & K
 
 export type Effect<K, V, T...> = typeof(setmetatable({} :: EffectFields, {} :: EffectImpl<K, V, T...>)) & V
