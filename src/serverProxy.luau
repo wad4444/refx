@@ -52,12 +52,7 @@ return function(ctorName, ...)
 		end,
 	}
 
-	function mt.__tostring()
-		return ctorName
-	end
-
 	local cachedSenders = {}
-
 	function mt.__index(_self, index)
 		if reservedFunctions[index] then
 			return reservedFunctions[index]
@@ -87,6 +82,10 @@ return function(ctorName, ...)
 
 	function mt.__newindex(_self, index)
 		logger.error(`Cannot override value of "{index}" from effect proxy!`)
+	end
+
+	function mt.__tostring()
+		return ctorName
 	end
 
 	mt.__metatable = {}

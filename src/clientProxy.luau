@@ -10,7 +10,17 @@ return function(constructor, ...)
     effect:constructor(...)
     entries.processLocalEntry(effect)
 
+    local reservedFunctions = {
+        Destroy = function()
+            effect:Destroy()
+        end,
+    }
+
     function mt.__index(_self, index)
+		if reservedFunctions[index] then
+			return reservedFunctions[index]
+		end
+
 		local foundMethod = rawget(constructor, index)
 		logger.assert(effect.IsDestroyed, `Cannot :{index}() after effect has been destroyed.`)
 		logger.assert(foundMethod ~= nil, `Effect is missing method "{index}" to call!`)
