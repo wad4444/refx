@@ -13,7 +13,7 @@ local modules: { ModuleScript } = {}
 
 function client.Register(directory: Instance)
 	logger.assert(runService:IsClient(), `Canoot Register() on server.`)
-	logger.assetWarn(not initialized, `Cannot Register() a directory after client has started.`)
+	logger.assertWarn(not initialized, `Cannot Register() a directory after client has started.`)
 
 	for _, v in directory:GetDescendants() do
 		if not v:IsA("ModuleScript") then
@@ -25,7 +25,7 @@ end
 
 function client.Start()
 	logger.assert(runService:IsClient(), `Canoot Start() on server.`)
-	logger.assetWarn(not initialized, `Cannot Start() a directory after client has started.`)
+	logger.assert(not initialized, `Cannot Start() a directory after client has started.`)
 
 	for _, v in modules do
 		require(v)
@@ -70,6 +70,7 @@ function client.Start()
 	remotes.__refx_communicator_urel:connect(processRequest)
 
 	entries.startChecker()
+	initialized = true
 end
 
 table.freeze(client)

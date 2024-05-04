@@ -39,11 +39,15 @@ function entries.checkCycle()
 
 	for _, entry in entriesMap do
 		local effect = entry.Effect
+		local isOverMaxLifetime = (tick() - entry.StartTimestamp) > effect.MaxLifetime
+
 		if effect.DestroyOnEnd then
+            if isOverMaxLifetime then
+                logger.warn(`Effect {effect} takes too long to execute! Consider raising MaxLifetime.`)
+            end
 			continue
 		end
 
-		local isOverMaxLifetime = (tick() - entry.StartTimestamp) > effect.MaxLifetime
 		if isOverMaxLifetime and effect.DestroyOnLifecycleEnd then
 			effect:Destroy()
 			continue

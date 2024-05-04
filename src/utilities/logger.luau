@@ -14,7 +14,7 @@ function logger.warn(warnString: string)
 	warn(string.format(errorFormat, `{warnString} \n`))
 end
 
-function logger.assetWarn(exp: boolean, warnString: string)
+function logger.assertWarn(exp: boolean, warnString: string)
 	local toWarn = string.format(errorFormat, `{warnString} \n`)
 	if not exp then
 		warn(toWarn)
