@@ -42,9 +42,9 @@ function entries.checkCycle()
 		local isOverMaxLifetime = (tick() - entry.StartTimestamp) > effect.MaxLifetime
 
 		if effect.DestroyOnEnd then
-            if isOverMaxLifetime then
-                logger.warn(`Effect {effect} takes too long to execute! Consider raising MaxLifetime.`)
-            end
+			if isOverMaxLifetime then
+				logger.warn(`Effect {effect} takes too long to execute! Consider raising MaxLifetime.`)
+			end
 			continue
 		end
 
@@ -73,7 +73,7 @@ function entries.getEffect(id)
 		return entry.Effect
 	end
 
-    return nil
+	return nil
 end
 
 function entries.startChecker()
