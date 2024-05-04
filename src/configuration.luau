@@ -10,17 +10,8 @@ local configGuard = t.interface({
 	Unreliable = t.optional(t.boolean),
 })
 
-local defaultConfig = {
-	Unrealiable = false,
-}
-
 function methodGuard(methodToCheck)
-	local found = false
 	for _, ctor in map.getAll() do
-		if found then
-			break
-		end
-
 		for name, method in ctor do
 			if methodToCheck ~= method then
 				continue
@@ -28,14 +19,18 @@ function methodGuard(methodToCheck)
 			if rawget(baseEffect, name) then
 				return false
 			end
-			found = true
-			break
+
+            return true
 		end
 	end
 
-	return found
+    return false
 end
 
+
+local defaultConfig = {
+	Unrealiable = false,
+}
 function configuration.Configure(method, config)
 	logger.assert(configGuard(config), "Provided config contains invalid values.")
 	logger.assert(methodGuard(method), "Provided method is not a valid effect method")
