@@ -23,7 +23,7 @@ function wrapper.VisualEffectDecorator(ctor)
 	ctor._withId = function(args, id)
 		logger.assert(runService:IsClient(), `Cannot cast effect locally on server.`)
 		local self = setmetatable({}, ctor)
-		self:constructor(args)
+		self:constructor(table.unpack(args))
 
 		entries.processReplicatedEntry(self, id)
 		return self

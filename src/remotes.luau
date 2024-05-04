@@ -10,7 +10,7 @@ type Remotes = {
 }
 
 return remo.createRemotes({
-	__refx_create = remo.remote(t.string, t.number, t.array(t.any)),
+	__refx_create = remo.remote(t.string, t.number, t.table),
 	__refx_destroy = remo.remote(t.number),
 	__refx_communicator_rel = remo.remote(t.number, t.string, t.table),
 	__refx_communicator_urel = remo.remote(t.number, t.string, t.table).unreliable(),

@@ -33,7 +33,7 @@ function BaseEffect:_start()
 	self._started = true
 
 	self._executionThread = task.spawn(function()
-		self:OnStart()
+		self:OnStart(table.unpack(self.Configuration))
 		if self.DestroyOnEnd then
 			self:Destroy()
 		end

@@ -12,6 +12,8 @@ local t = require(script.Parent.modules.t)
 
 return function(ctorName, ...)
 	local params = {...}
+	params[0] = "__REFX_HOLD"
+
 	local id = nextId()
 
 	local proxy = newproxy(true)

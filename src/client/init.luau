@@ -39,6 +39,10 @@ function client.Start()
 		)
 		assert(constructor, "")
 
+		if params[0] then
+			params[0] = nil
+		end
+
 		constructor._withId(params, id)
 	end)
 
