@@ -3,4 +3,4 @@
 set -e
 
 bash scripts/install-packages.sh
-rojo build -o refx.rbxm simple.project.json
+rojo build -o refx.rbxm withDeps.project.json
