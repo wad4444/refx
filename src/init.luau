@@ -11,10 +11,6 @@ export type ClientProxy<K> = {
 	Destroy: (ClientProxy<K>?) -> nil,
 } & K & any
 
-export type FunctionAttributes = {
-	Unreliable: boolean,
-}
-
 export type EffectFields = {
 	IsDestroyed: boolean,
 	DestroyOnEnd: boolean,
@@ -33,6 +29,10 @@ export type EffectImpl<K, V, T...> = {
 } & K
 
 export type Effect<K, V, T...> = typeof(setmetatable({} :: EffectFields, {} :: EffectImpl<K, V, T...>)) & V
+
+export type FunctionAttributes = {
+	Unreliable: boolean,
+}
 
 type refX = {
 	CreateEffect: (string) -> EffectImpl<any, any, ...any>,
