@@ -7,6 +7,7 @@ BaseEffect.__index = BaseEffect
 
 local modules = script.Parent.modules
 local signal = require(modules.signal)
+local logger = require(script.Parent.utilities.logger)
 
 function BaseEffect.constructor(self, ...)
 	self.Configuration = { ... }
@@ -23,6 +24,11 @@ function BaseEffect.constructor(self, ...)
 end
 
 function BaseEffect:Start()
+	if self._started then
+		logger.error(`Cannot :Start() effect {self} twice!`)
+	end
+	self._started = true
+
 	self:OnStart()
 	if self.DestroyOnEnd then
 		self:Destroy()
@@ -30,6 +36,10 @@ function BaseEffect:Start()
 end
 
 function BaseEffect:Destroy()
+	if self.IsDestroyed then
+		return
+	end
+
 	self.IsDestroyed = true
 	self.Destroyed:Fire()
 end
