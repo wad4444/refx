@@ -45,7 +45,7 @@ function entries.checkCycle()
 		local effect = entry.Effect
 		local isOverMaxLifetime = (tick() - entry.StartTimestamp) > effect.MaxLifetime
 
-        local effectName = tostring(getmetatable(effect))
+		local effectName = tostring(getmetatable(effect))
 		if isOverMaxLifetime and effect.DestroyOnLifecycleEnd then
 			effect:Destroy()
 			continue

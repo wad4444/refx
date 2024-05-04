@@ -6,17 +6,17 @@ return function(constructor, ...)
 	local proxy = newproxy(true)
 	local mt = getmetatable(proxy)
 
-    local effect = setmetatable({}, constructor)
-    effect:constructor(...)
-    entries.processLocalEntry(effect)
+	local effect = setmetatable({}, constructor)
+	effect:constructor(...)
+	entries.processLocalEntry(effect)
 
-    local reservedFunctions = {
-        Destroy = function()
-            effect:Destroy()
-        end,
-    }
+	local reservedFunctions = {
+		Destroy = function()
+			effect:Destroy()
+		end,
+	}
 
-    function mt.__index(_self, index)
+	function mt.__index(_self, index)
 		if reservedFunctions[index] then
 			return reservedFunctions[index]
 		end
@@ -25,14 +25,14 @@ return function(constructor, ...)
 		logger.assert(effect.IsDestroyed, `Cannot :{index}() after effect has been destroyed.`)
 		logger.assert(foundMethod ~= nil, `Effect is missing method "{index}" to call!`)
 
-        return foundMethod
-    end
+		return foundMethod
+	end
 
-    function mt.__newindex(_self, index)
+	function mt.__newindex(_self, index)
 		logger.error(`Cannot override value of "{index}" from effect proxy!`)
-    end
+	end
 
-    mt.__metatable = {}
+	mt.__metatable = {}
 
-    return proxy
+	return proxy
 end

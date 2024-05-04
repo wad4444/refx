@@ -11,7 +11,7 @@ local nextId = createIdGenerator()
 local t = require(script.Parent.modules.t)
 
 return function(ctorName, ...)
-	local params = {...}
+	local params = { ... }
 	params[0] = "__REFX_HOLD"
 
 	local id = nextId()
@@ -27,7 +27,7 @@ return function(ctorName, ...)
 	local players: { Player } = {}
 
 	local function omitSelf(...)
-		local args = {...}
+		local args = { ... }
 		return table.unpack(args, args[1] == proxy and 2 or 1)
 	end
 
