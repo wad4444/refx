@@ -27,7 +27,7 @@ function client.Start()
 	logger.assetWarn(not initialized, `Cannot Start() a directory after client has started.`)
 
 	for _, v in modules do
-		(require :: any)(v)
+		require(v)
 	end
 
 	remotes.__refx_create:connect(function(effectName, id, params)
@@ -38,7 +38,7 @@ function client.Start()
 		)
 		assert(constructor, "")
 
-		constructor._locallyWithId(params, id)
+		constructor._withId(params, id)
 	end)
 end
 

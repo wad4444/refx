@@ -1,5 +1,7 @@
 local entries = {}
 
-function entries.processEntry(effect, id) end
+function entries.processReplicatedEntry(effect, id) end
+
+function entries.processLocalEntry(effect) end
 
 return entries

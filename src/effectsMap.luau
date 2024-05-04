@@ -1,10 +1,9 @@
 local logger = require(script.Parent.utilities.logger)
 
 local map = {}
-
 local effectsMap = {}
 
-function effectsMap.get(name: string)
+function effectsMap.get(name)
 	return map[name]
 end
 

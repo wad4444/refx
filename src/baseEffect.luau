@@ -11,6 +11,10 @@ function BaseEffect.constructor(self, ...)
 	return self
 end
 
+function BaseEffect:_start(id)
+	self._id = id
+end
+
 function BaseEffect:OnStart() end
 
 table.freeze(BaseEffect)
