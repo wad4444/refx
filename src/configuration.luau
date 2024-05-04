@@ -20,13 +20,12 @@ function methodGuard(methodToCheck)
 				return false
 			end
 
-            return true
+			return true
 		end
 	end
 
-    return false
+	return false
 end
-
 
 local defaultConfig = {
 	Unrealiable = false,
