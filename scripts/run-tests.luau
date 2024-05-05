@@ -3,20 +3,11 @@ local fs = require("@lune/fs")
 local luau = require("@lune/luau")
 local process = require("@lune/process")
 local stdio = require("@lune/stdio")
+local task = require("@lune/task")
 
 local testPlacePath = process.args[1]
 
 local game = roblox.deserializePlace(fs.readFile(testPlacePath))
-
-local function tableJoin(...)
-	local result = {}
-	for i = 1, select("#", ...) do
-		for k, v in select(i, ...) do
-			result[k] = v
-		end
-	end
-	return result
-end
 
 -- not 100% accurate to tick() functionality, but good enough for TestEZ usage
 local function tick()
@@ -31,7 +22,9 @@ roblox.implementMethod("RunService", "IsClient", function()
 end)
 
 roblox.implementProperty("RunService", "Heartbeat", function()
-	return {}
+	return {
+		Connect = function() end,
+	}
 end, function() end)
 
 roblox.implementMethod("RunService", "IsServer", function()
@@ -56,12 +49,15 @@ local robloxRequire
 local function runRobloxScript(script)
 	local callableFn = luau.load(luau.compile(script.Source), {
 		debugName = script:GetFullName(),
-		environment = tableJoin(roblox, {
+		environment = {
+			Instance = Instance,
+			task = task, 
 			game = game,
 			script = script,
 			require = robloxRequire,
 			tick = tick,
-		}),
+			coroutine = coroutine,
+		},
 	})
 
 	return callableFn()
