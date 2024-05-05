@@ -23,3 +23,16 @@ jobs:
       
       - name: Run Build Scripts
         run: bash scripts/run-tests.sh
+
+      - name: Upload Test Output
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-output
+          path: tests/out
+
+      - name: Report Coverage
+        continue-on-error: true
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
