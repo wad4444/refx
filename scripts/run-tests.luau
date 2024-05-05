@@ -6,7 +6,6 @@ local stdio = require("@lune/stdio")
 local task = require("@lune/task")
 
 local testPlacePath = process.args[1]
-
 local game = roblox.deserializePlace(fs.readFile(testPlacePath))
 
 local function tick()
