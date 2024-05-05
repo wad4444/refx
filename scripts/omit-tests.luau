@@ -1,8 +1,5 @@
--- selene: allow(incorrect_standard_library_use)
 local process = require("@lune/process")
--- selene: allow(incorrect_standard_library_use)
 local fs = require("@lune/fs")
--- selene: allow(incorrect_standard_library_use)
 local roblox = require("@lune/roblox")
 
 local args = process.args

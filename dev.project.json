@@ -7,6 +7,15 @@
 			"Packages": {
 				"$path": "Packages",
 				"refx": { "$path": "src" }
+			},
+			"DevPackages": {
+				"$path": "DevPackages"
+			}
+		},
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"main": {
+				"$path": "scripts/testrunner.server.luau"
 			}
 		}
 	}

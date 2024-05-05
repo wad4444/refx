@@ -8,3 +8,6 @@ realm = "shared"
 remo = "littensy/remo@1.4.0"
 t = "osyrisrblx/t@3.1.1"
 signal = "sleitnick/signal@2.0.1"
+
+[dev-dependencies]
+testez = "roblox/testez@0.4.1"
