@@ -4,4 +4,7 @@
 	"luau-lsp.require.directoryAliases": {
 		"@lune/": "~/.lune/.typedefs/0.8.3/"
 	},
+	"luau-lsp.types.definitionFiles": [
+		"bin/testez.d.luau"
+	],
 }
