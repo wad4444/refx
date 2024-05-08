@@ -1,4 +1,0 @@
-std = "roblox+testez"
-
-[lints]
-incorrect_standard_library_use = "allow"

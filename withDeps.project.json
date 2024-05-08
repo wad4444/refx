@@ -1,9 +1,0 @@
-{
-    "name": "refx",
-    "tree": {
-      "$path": "src",
-      "dependencies": {
-        "$path": "Packages"
-        }
-    }
-}
