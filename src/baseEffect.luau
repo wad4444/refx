@@ -40,6 +40,8 @@ function BaseEffect:_start()
 	end)
 end
 
+function BaseEffect:OnDestroy() end
+
 function BaseEffect:Destroy()
 	if self.IsDestroyed then
 		return
@@ -52,6 +54,8 @@ function BaseEffect:Destroy()
 
 	self.IsDestroyed = true
 	self.Destroyed:Fire()
+
+	self:OnDestroy()
 end
 
 function BaseEffect:OnStart() end

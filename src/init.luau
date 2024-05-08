@@ -24,6 +24,7 @@ export type EffectImpl<K, V, T...> = {
 	__index: EffectImpl<K, V, T...>,
 	OnStart: (Effect<K, V, T...>, T...) -> (),
 	OnConstruct: (Effect<K, V, T...>) -> (),
+	OnDestroy: (Effect<K, V, T...>) -> (),
 	new: (T...) -> ServerProxy<K, V, T...>,
 	locally: (T...) -> ClientProxy<K, V, T...>,
 } & K
