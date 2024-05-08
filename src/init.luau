@@ -37,7 +37,7 @@ export type Effect<K, V, T...> =
 	& V
 
 export type FunctionAttributes = {
-	Unreliable: boolean,
+	Unreliable: boolean?,
 }
 
 type refX = {
