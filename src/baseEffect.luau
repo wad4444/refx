@@ -20,7 +20,7 @@ function BaseEffect.constructor(self, ...)
 	self.DestroyOnEnd = true
 	self.Destroyed = signal.new()
 
-	self:OnConstruct()
+	self:OnConstruct(...)
 	return self
 end
 
