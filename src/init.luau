@@ -1,3 +1,4 @@
+--!strict
 local exports = require(script.exports)
 table.freeze(exports)
 
@@ -27,16 +28,19 @@ export type EffectImpl<K, V, T...> = {
 	OnDestroy: (Effect<K, V, T...>) -> (),
 	new: (T...) -> ServerProxy<K, V, T...>,
 	locally: (T...) -> ClientProxy<K, V, T...>,
-} & K
+}
 
-export type Effect<K, V, T...> = typeof(setmetatable({} :: EffectFields, {} :: EffectImpl<K, V, T...>)) & V
+export type Effect<K, V, T...> =
+	typeof(setmetatable({} :: EffectFields, {} :: EffectImpl<K, V, T...>))
+	& typeof(setmetatable({} :: EffectFields, ({} :: any) :: K))
+	& V
 
 export type FunctionAttributes = {
 	Unreliable: boolean,
 }
 
 type refX = {
-	CreateEffect: (string) -> EffectImpl<never, never, ...never>,
+	CreateEffect: (string) -> EffectImpl<unknown, unknown, ...unknown>,
 	Configure: ((...any) -> any, FunctionAttributes) -> (),
 	Start: () -> (),
 	Register: (Instance) -> (),
