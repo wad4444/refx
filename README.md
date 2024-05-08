@@ -5,5 +5,5 @@
 	<a href="https://github.com/"><strong>View docs &rarr;</strong></a>
   <br><br><br>
 
-  Made with love by [@wAD](https://github.com/g1mmethemoney)❤️
+  Made with love by [@wAD](https://github.com/wad4444)❤️
 </div>
