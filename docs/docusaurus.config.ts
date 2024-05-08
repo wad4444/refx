@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'refx',
-  tagline: 'A library for replicating Visual Effects in Roblox.',
+  tagline: 'A library for Replicating Visual Effects in Roblox.',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -84,6 +84,7 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ["lua", "bash"],
     },
   } satisfies Preset.ThemeConfig,
 };
