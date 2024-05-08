@@ -1,5 +1,9 @@
 <div align="center">
-	<img src="assets/logo.png" alt="RefX" width="175" />
+	<picture>
+		<source media="(prefers-color-scheme: dark)" srcset="assets/logo.png">
+		<source media="(prefers-color-scheme: light)" srcset="assets/logo-dark.png">
+		<img alt="Refx Logo" src="logo.png">
+	</picture>
 	<br><br><br>
 	<p>A library for Replicating Visual Effects in Roblox</p>
 	<a href="https://wad4444.github.io/refx/"><strong>View docs &rarr;</strong></a>
