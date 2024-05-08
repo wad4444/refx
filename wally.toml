@@ -1,11 +1,11 @@
 [package]
 name = "wad4444/refx"
-version = "0.2.0"
+version = "0.3.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 description = "A lightweight library for Replicating Visual Effects in Roblox."
-include = ["src", "src/**"]
-exclude = ["docs", "docs/**", "*"]
+include = ["src", "src/**", "wally.toml"]
+exclude = ["docs", "node_modules", "bin", "assets", ".vscode", ".github", "*.toml", "*.json", ".luaurc", "README.md", "*.yaml"]
 
 [dependencies]
 remo = "littensy/remo@1.4.0"
