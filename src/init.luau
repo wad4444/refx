@@ -36,7 +36,7 @@ export type FunctionAttributes = {
 }
 
 type refX = {
-	CreateEffect: (string) -> EffectImpl<unknown, unknown, ...unknown>,
+	CreateEffect: (string) -> EffectImpl<never, never, ...never>,
 	Configure: ((...any) -> any, FunctionAttributes) -> (),
 	Start: () -> (),
 	Register: (Instance) -> (),
