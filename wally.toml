@@ -4,7 +4,8 @@ version = "0.2.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 description = "A lightweight library for Replicating Visual Effects in Roblox."
-include = ["src"]
+include = ["src", "src/**"]
+exclude = ["docs", "docs/**", "*"]
 
 [dependencies]
 remo = "littensy/remo@1.4.0"
