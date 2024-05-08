@@ -30,6 +30,7 @@ export type EffectImpl<K, V, T...> = {
 	locally: (T...) -> ClientProxy<K, V, T...>,
 }
 
+-- important note: if you provide something that's not table into K or V type solver will commit suicide
 export type Effect<K, V, T...> =
 	typeof(setmetatable({} :: EffectFields, {} :: EffectImpl<K, V, T...>))
 	& typeof(setmetatable({} :: EffectFields, ({} :: any) :: K))
