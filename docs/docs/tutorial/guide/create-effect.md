@@ -45,7 +45,7 @@ export class myEffect extends BaseEffect {
 </Tabs>
 
 As you can see, we're *overriding* one of the built-in *special methods* provided by refx - `OnStart`. <br/>
-This method fires whenever your effect starts. You can view list of all special methods in the api. (hyperlink here idiot)
+This method fires whenever your effect starts. You can view list of all special methods in the api.
 
 ## Constructor Arguments
 
