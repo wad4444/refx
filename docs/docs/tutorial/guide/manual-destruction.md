@@ -36,7 +36,7 @@ return myEffect
 import { BaseEffect, VisualEffectDecorator, Config } from "@rbxts/refx";
 
 @VisualEffectDecorator
-export class myEffect extends BaseEffect<[number]> {
+export class myEffect extends BaseEffect {
     protected readonly DestroyOnEnd = false;
     protected readonly DestroyOnLifecycleEnd = false;
 }

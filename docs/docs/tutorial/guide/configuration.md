@@ -41,7 +41,7 @@ return myEffect
 import { BaseEffect, VisualEffectDecorator, Config } from "@rbxts/refx";
 
 @VisualEffectDecorator
-export class myEffect extends BaseEffect<[number]> {
+export class myEffect extends BaseEffect {
     protected readonly DestroyOnEnd = false; // so our effect don't get destroyed instantly.
     protected readonly MaxLifetime = 10;
 
