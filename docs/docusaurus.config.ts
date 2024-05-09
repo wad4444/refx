@@ -72,6 +72,12 @@ const config: Config = {
           label: 'Tutorial',
         },
         {
+          type: 'docSidebar',
+          sidebarId: 'apiSidebar',
+          position: 'left',
+          label: 'API',
+        },
+        {
           href: 'https://github.com/wad4444/refx',
           label: 'GitHub',
           position: 'right',
