@@ -5,7 +5,7 @@ registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 description = "A lightweight library for Replicating Visual Effects in Roblox."
 include = ["src", "src/**", "wally.toml"]
-exclude = ["docs", "node_modules", "bin", "assets", ".vscode", ".github", "*.toml", "*.json", ".luaurc", "README.md", "*.yaml"]
+exclude = ["docs", "out", "node_modules", "bin", "assets", ".vscode", ".github", "*.toml", "*.json", ".luaurc", "README.md", "*.yaml"]
 
 [dependencies]
 remo = "littensy/remo@1.4.0"
