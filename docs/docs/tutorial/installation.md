@@ -23,7 +23,7 @@ under `[dependencies]` in your `wally.toml` file.
 
 ```md title="wally.toml"
 [dependencies]
-refx = "wad4444/refx@0.3.0"
+refx = "wad4444/refx@0.3.1"
 ```
 
 ### Roblox Studio Installation
