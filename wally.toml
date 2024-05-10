@@ -4,8 +4,9 @@ version = "0.3.1"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 description = "A lightweight library for Replicating Visual Effects in Roblox."
-include = ["src/**", "wally.toml", "default.project.json"]
-exclude = ["docs", "out", "scripts", "node_modules", "bin", "assets", ".vscode", ".github", "*.toml", "*.json", ".luaurc", "README.md", "*.yaml"]
+license = "MIT"
+include = ["src", "wally.toml", "default.project.json"]
+exclude = ["docs", "out", "scripts", "node_modules", "bin", "assets", ".vscode", ".github", "*.toml", "*.json", "*.tgz", ".luaurc", "README.md", "*.yaml"]
 
 [dependencies]
 remo = "littensy/remo@1.4.0"
