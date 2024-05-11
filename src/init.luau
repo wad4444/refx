@@ -19,6 +19,13 @@ export type EffectFields = {
 	MaxLifetime: number,
 	DisableLeakWarning: boolean,
 	Configuration: { unknown },
+	Destroyed: ReadonlySignal
+}
+
+export type ReadonlySignal<T = () -> ()> = {
+	Connect: (ReadonlySignal<T>, T) -> RBXScriptConnection,
+	Once: (ReadonlySignal<T>, T) -> RBXScriptConnection,
+	Wait: (ReadonlySignal<T>) -> (),
 }
 
 export type EffectImpl<K, V, T...> = {
