@@ -1,6 +1,6 @@
 [package]
 name = "wad4444/refx"
-version = "0.3.1"
+version = "0.3.2"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 description = "A lightweight library for Replicating Visual Effects in Roblox."
