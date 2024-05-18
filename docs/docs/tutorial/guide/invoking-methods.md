@@ -40,7 +40,7 @@ return myEffect
 import { BaseEffect, VisualEffectDecorator } from "@rbxts/refx";
 
 @VisualEffectDecorator
-export class myEffect extends BaseEffect<[number]> {
+export class myEffect extends BaseEffect {
     protected readonly DestroyOnEnd = false; // so our effect don't get destroyed instantly.
     protected readonly MaxLifetime = 10;
 
@@ -60,7 +60,7 @@ Let's *create our effect* and c*all our method* from the *server proxy*:
 
 ```lua title="somewhere.lua" showLineNumbers
 local myEffect = require(path.to.effect)
-local effect = myEffect.new(10):Start(game.Players:GetPlayers())
+local effect = myEffect.new():Start(game.Players:GetPlayers())
 effect:DoSomething(10)
 ```
 
@@ -71,7 +71,7 @@ effect:DoSomething(10)
 import { myEffect } from "./myEffect";
 import { Players } from "@rbxts/services";
 
-const effect = new myEffect(10).Start(Players.GetPlayers());
+const effect = new myEffect().Start(Players.GetPlayers());
 effect.DoSomething(10);
 ```
 
