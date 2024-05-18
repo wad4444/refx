@@ -19,7 +19,7 @@ export type EffectFields = {
 	MaxLifetime: number,
 	DisableLeakWarning: boolean,
 	Configuration: { unknown },
-	Destroyed: ReadonlySignal
+	Destroyed: ReadonlySignal,
 }
 
 export type ReadonlySignal<T = () -> ()> = {
