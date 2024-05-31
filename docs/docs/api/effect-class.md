@@ -32,7 +32,7 @@ If true, disables [a memory leak warning](../tutorial/guide/manual-destruction.m
 ### `new(...) -> ServerProxy`
 Used on server. Creates an [effect proxy](./server-proxy.md) and broadcasts every called method to clients.
 
-### `new(...) -> ClientProxy`
+### `locally(...) -> ClientProxy`
 Used on client. Creates your effect locally and returns a [client proxy](./client-proxy.md).
 
 ## Methods

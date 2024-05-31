@@ -30,5 +30,5 @@ Requires all module scripts in a directory when client starts. Can only be calle
 **`Parameters:`**
 * Directory: `Instance`
 
-## `Start(directory)` **@client**
+## `Start()` **@client**
 Starts the client and requires all registered module scripts.
