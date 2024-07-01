@@ -62,7 +62,7 @@ return function(ctorName, ...)
 			return reservedFunctions[index]
 		end
 
-		local foundMethod = rawget(constructor, index)
+		local foundMethod = constructor[index]
 		logger.assert(initialized, `Cannot :{index}() before effect has started.`)
 		logger.assert(not destroyed, `Cannot :{index}() after effect has been destroyed.`)
 		logger.assert(foundMethod ~= nil, `Effect is missing method "{index}" to call!`)
