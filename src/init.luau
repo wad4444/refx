@@ -3,7 +3,7 @@ local exports = require(script.exports)
 table.freeze(exports)
 
 export type ServerProxy<K, V, T...> = {
-	Start: (ServerProxy<K, V, T...>, { Player }) -> ServerProxy<K, V, T...>,
+	Start: (ServerProxy<K, V, T...>, ({ Player })?) -> ServerProxy<K, V, T...>,
 	GetPlayers: (ServerProxy<K, V, T...>) -> { Player },
 	Destroy: (ServerProxy<K, V, T...>) -> ServerProxy<K, V, T...>,
 } & K & Effect<K, V, T...>
