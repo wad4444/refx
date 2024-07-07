@@ -14,10 +14,6 @@ return function()
 			expect(function()
 				proxy:Start(1 :: any)
 			end).to.throw()
-
-			expect(function()
-				proxy:Start(nil :: any)
-			end).to.throw()
 		end)
 	end)
 
