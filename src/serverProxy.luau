@@ -37,7 +37,10 @@ return function(ctorName, ...)
 		Start = function(...)
 			local providedPlayers = omitSelf(...)
 
-			logger.assert(t.optional(t.array(t.instance("Player")))(providedPlayers), "Provide a valid array of players to :Start().")
+			logger.assert(
+				t.optional(t.array(t.instance("Player")))(providedPlayers),
+				"Provide a valid array of players to :Start()."
+			)
 			logger.assert(not initialized, "Cannot :Start() effect twice.")
 
 			players = providedPlayers or Players:GetPlayers()
