@@ -10,6 +10,8 @@ local nextId = createIdGenerator()
 
 local t = require(script.Parent.modules.t)
 
+local Players = game:GetService("Players")
+
 return function(ctorName, ...)
 	local params = { ... }
 	params[0] = "__REFX_HOLD"
@@ -33,11 +35,15 @@ return function(ctorName, ...)
 
 	local reservedFunctions = {
 		Start = function(...)
-			local plrs = omitSelf(...)
-			logger.assert(t.array(t.instance("Player"))(plrs), "Provide a valid array of players to :Start().")
+			local providedPlayers = omitSelf(...)
+
+			logger.assert(
+				t.optional(t.array(t.instance("Player")))(providedPlayers),
+				"Provide a valid array of players to :Start()."
+			)
 			logger.assert(not initialized, "Cannot :Start() effect twice.")
 
-			players = plrs
+			players = providedPlayers or Players:GetPlayers()
 			initialized = true
 
 			remotes.__refx_create:firePlayers(players, ctorName, id, params)
