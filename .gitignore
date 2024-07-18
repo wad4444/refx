@@ -4,3 +4,4 @@
 *.tsbuildinfo
 DevPackages
 Packages
+sourcemap.json
