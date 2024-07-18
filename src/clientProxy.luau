@@ -27,7 +27,7 @@ return function(constructor, ...)
 			return reservedFunctions[index]
 		end
 
-		local foundMethod = rawget(constructor, index)
+		local foundMethod = constructor[index]
 		logger.assert(foundMethod ~= nil, `Effect is missing method "{index}" to call!`)
 		logger.assert(effect.IsDestroyed, `Cannot :{index}() after effect has been destroyed.`)
 
