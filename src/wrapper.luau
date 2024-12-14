@@ -12,7 +12,7 @@ local wrapper = {}
 
 function wrapper.VisualEffectDecorator(ctor)
 	ctor.new = function(...)
-		if RunService:IsServer() then
+		if runService:IsServer() then
 			return createProxy(tostring(ctor), ...)
 		end
 		return createClientProxy(ctor, ...)
@@ -45,7 +45,7 @@ function wrapper.CreateEffect<T...>(name, extendsFrom)
 	if extendsFrom and not instanceofConstructor(extendsFrom, baseEffect) then
 		logger.error(`{extendsFrom} is not a valid base effect!`)
 	end
-	
+
 	local super = extendsFrom or baseEffect
 	local class = setmetatable({}, {
 		__tostring = function()
