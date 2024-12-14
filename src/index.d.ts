@@ -12,7 +12,7 @@ export declare abstract class BaseEffect<T extends unknown[] = []> {
 
 	constructor(...args: T);
 
-	Start(players: Player[]): this;
+	Start(players?: Player[]): this;
 	GetPlayers(): Player[];
 	Destroy(): this;
 
