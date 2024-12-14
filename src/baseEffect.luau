@@ -49,7 +49,6 @@ function BaseEffect:Destroy()
 	end
 
 	if self._executionThread and coroutine.status(self._executionThread) ~= "dead" then
-		logger.warn(`:OnStart() was still executing, but effect is destroyed. Thread was cancelled.`)
 		task.cancel(self._executionThread)
 	end
 
