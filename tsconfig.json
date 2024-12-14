@@ -1,4 +1,5 @@
 {
+	"exclude": ["docs", "docs/**/*"],
 	"compilerOptions": {
 		// required
 		"allowSyntheticDefaultImports": true,
