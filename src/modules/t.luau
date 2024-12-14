@@ -7,4 +7,4 @@ local getModule = require(package.utilities.getModule)
 local module = getModule("t")
 
 local required = require(module)
-return required['t'] and required['t'] or required  :: t
+return required["t"] and required["t"] or required :: t
